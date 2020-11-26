@@ -16,10 +16,18 @@
 		</div>
 
 		<div class="form-group">
-			<label for="targetArticleId">返信先コメント番号</label> <input type="number"
+			<label for="targetArticleId">返信先コメント番号（返信先が特にない場合は、-1にしてください）</label> 
+			
+			
+			<input th:if="${targetAt != null}" type="number"
 				class="form-control" name="targetArticleId" id="targetArticleId"
 				th:value="${targetAt}">
+			<input th:unless="${targetAt != null}" type="number"
+				class="form-control" name="targetArticleId" id="targetArticleId"
+				th:value="-1">
 			<div class="invalid-feedback">その番号のメッセージは存在しません</div>
+			
+			
 			<div th:if="${target_error != null}">
 				<div id="numberError">numberError</div>
 

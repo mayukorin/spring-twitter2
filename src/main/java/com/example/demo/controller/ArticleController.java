@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.component.ChannelComponent;
 import com.example.demo.component.DramaComponent;
 import com.example.demo.model.Article;
+import com.example.demo.model.Reply;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.ReplyService;
 import com.example.demo.service.SessionService;
@@ -45,7 +46,7 @@ public class ArticleController {
 
 	
 	@GetMapping("/article_new")
-	public String articleNew(@ModelAttribute("article") Article article,Model model) {
+	public String articleNew(@ModelAttribute("article") Article article,@ModelAttribute("reply") Reply reply,Model model) {
 		
 		
 		

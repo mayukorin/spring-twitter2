@@ -15,7 +15,7 @@ public class ArticleTargetIdValidator {
 	private final SessionService sessionService;
 
 	public boolean articleTargetIdCheck(Long id) {
-		return id == null || articleRepository.countArticleByChannelId(id,sessionService.getChannelComponent().getChannel().getId()) != 0;
+		return id == -1 || articleRepository.countArticleByChannelId(id,sessionService.getChannelComponent().getChannel().getId()) != 0;
 	}
 
 }

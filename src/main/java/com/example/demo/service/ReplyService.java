@@ -20,7 +20,7 @@ public class ReplyService {
 
 	public void insert(Article article,Long targetArticleId) {
 
-		if (targetArticleId != null) {
+		if (targetArticleId != -1) {
 
 			Reply reply = new Reply();
 

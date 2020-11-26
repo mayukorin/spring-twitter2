@@ -30,8 +30,7 @@ https://projectlombok.org/download
 # Usage
  
 こちらにアクセスをお願いします。  
-http://spring-twitter.herokuapp.com/login  
-
+http://spring-twitter2.herokuapp.com/login  
 ユーザー名「test」、パスワード「cba」でログインすることができます。  
 
  

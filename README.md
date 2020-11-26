@@ -36,7 +36,9 @@ http://spring-twitter2.herokuapp.com/login
  
 # Note
  
-* 2020年9・10月のドラマのお気に入り登録者数の推移は、デモとして適当に値を入れたものです。  
+* 2020年9・10月のドラマのお気に入り登録者数の推移は、デモとして適当に値を入れたものです。 
+* ERダイアグラム  
+![springTwitterER](https://user-images.githubusercontent.com/63027348/100308812-a3185400-2fec-11eb-9e0d-d6df2fd9bf88.png)
  
 # Author
  

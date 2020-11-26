@@ -50,6 +50,9 @@ public class SiteUser {
 	@OneToMany(mappedBy="creater")
 	private List<Drama> dramas;
 	
+	@OneToMany(mappedBy="creater")
+	private List<Channel> channels;
+	
 	private Boolean admin;
 	
 	

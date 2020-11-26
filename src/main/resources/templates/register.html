@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: header"></th:block>
+		</div>
+		<div id="cont">
+			<h2>ユーザ登録</h2>
+			<br>
+			<div th:if="${param.error}">
+				<div class="alert alert-danger" role="alert">ユーザー名またはパスワードが正しくありません</div>
+			</div>
+			<form th:action="@{/user_register}" th:object="${user}" method="post"
+				novalidate>
+				<th:block th:insert="fragments/_form_user :: user_form">
+				</th:block>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" id="check1a"
+						th:field="*{admin}"> <label class="form-check-label">管理者としてログインする</label>
+				</div>
+				<br>
+				<button type="submit" class="btn btn-primary">登録</button>
+
+			</form>
+			<br>
+			<p>
+				<a th:href="@{/login}">ログインはこちらから</a>
+			</p>
+		</div>
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+
+	</div>
+
+</body>
+</html>

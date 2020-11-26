@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+		<div id="cont">
+			<div th:if="${dateError != null}">
+				<div class="alert alert-danger" role="alert" th:text="${dateError}"></div>
+			</div>
+			<h2>ドラマ編集</h2>
+			<form th:action="@{/drama_update{redirectTo}(redirectTo = ${fromFlag})}"
+				method="post" th:object="${drama}" novalidate>
+				<th:block th:insert="fragments/_form_drama :: drama_form"></th:block>
+				<input type="hidden" th:field="*{id}">
+				<button type="submit" class="btn btn-primary">登録</button>
+
+			</form>
+			<br>
+			<p>
+				<a th:href="@{#}" onclick="confirmDestroy();">このドラマを削除する</a>
+			</p>
+			<p th:if = "${!fromFlag.equals('none')}"><a th:href="@{${fromFlag2}}">ドラマ一覧へ戻る</a>
+			
+		</div>
+
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+	</div>
+	<form method="post" th:action="@{/drama_delete/{id}/{redirectTo}(id=${drama.id},redirectTo=${fromFlag})}">
+	</form>
+	<script>
+		console.log(document.forms[0]);
+		function confirmDestroy() {
+			console.log(document.forms[1]);
+			if (confirm("本当に削除してよろしいですか？")) {
+
+				document.forms[2].submit();
+			}
+		}
+	</script>
+</body>
+</html>

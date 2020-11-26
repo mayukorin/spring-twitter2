@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: header"></th:block>
+		</div>
+		<div id="cont">
+			<div>
+				<div th:if="${param.register}">
+
+					<div class="alert alert-success" role="alert">ユーザーを新規登録しました</div>
+				</div>
+				<div th:if="${param.error}">
+					<div class="alert alert-danger" role="alert">ユーザー名またはパスワードが正しくありません</div>
+				</div>
+				<div th:if="${param.logout}">
+					<div class="alert alert-success" role="alert">
+						<div>ログアウトしました</div>
+						<div>（アカウント情報編集ページで登録を押した場合は、編集が完了したので新しいユーザー名とパスワードでログインしなおしてください）</div>
+					</div>
+				</div>
+			</div>
+			<form th:action="@{/login}" method="post" novalidate>
+
+				<div class="form-group">
+					<label for="username">ユーザー名</label> <input type="text"
+						name="username" placeholder="ユーザー名" class="form-control">
+				</div>
+
+
+
+				<div class="form-group">
+					<label for="password">パスワード</label> <input type="password"
+						name="password" placeholder="パスワード" class="form-control">
+				</div>
+
+				<button type="submit" class="btn btn-primary">ログイン</button>
+
+			</form>
+			<br>
+			<p>
+				<a th:href="@{/user_register}">新規登録はこちら</a>
+			</p>
+
+		</div>
+
+
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<th:block th:fragment="user_form">
+
+
+		<div class="form-group">
+			<label for="name">ユーザー名</label> <input type="text"
+				placeholder="ユーザー名" class="form-control" th:errorclass="is-invalid"
+				th:field="*{name}">
+			<div class="invalid-feedback" th:errors="*{name}"></div>
+		</div>
+		<br>
+
+		<div class="form-group">
+			<label for="password">パスワード</label> <input type="password"
+				placeholder="変更する場合のみ入力してください" th:errorclass="is-invalid"
+				class="form-control" th:field="*{password}">
+			<div class="invalid-feedback" th:errors="*{password}"></div>
+		</div>
+		<br>
+
+		<div class="form-group">
+			<label for="name">LineNotifyのトークン</label> <input type="text"
+				th:field="*{token}" placeholder="後からでも入力できます" class="form-control"
+				th:errorclass="is-invalid">
+			<div class="invalid-feedback" th:errors="*{token}"></div>
+		</div>
+		<br>
+
+		<input type="hidden" th:field="*{id}">
+
+
+
+
+
+	</th:block>
+
+</body>
+</html>

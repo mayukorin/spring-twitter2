@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<th:block th:fragment="head">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Twitterアプリ</title>
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/css/app.css}">
+	<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+		rel="stylesheet">
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
+</th:block>
+</head>
+<body>
+	<th:block th:fragment="header">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">DS</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+		</nav>
+	</th:block>
+	<th:block th:fragment="login_header">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/topPage">DS</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/user_edit">MyAccount</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/my_dramas">MyDrama</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/myChannel">MyChannel</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/myArticle">MyComment</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/favorite_dramas">FavoriteDrama</a></li>
+						<li class="nav-item"><a class="nav-link" href="/logout">Logout</a>
+						</li>
+					</ul>
+					<form th:action="@{/searchDrama}" method="get"
+						class="form-inline my-2 my-lg-0 d-flex">
+						<input type="text" name="keyword" class="form-control mr-sm-2"
+							placeholder="ドラマ名を検索" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+	</th:block>
+	<th:block th:fragment="footer">
+		<script>
+window.addEventListener('load', function(){
+	var numberErrorDiv = document.getElementById("numberError");
+	if (numberErrorDiv.innerHTML=="numberError") {
+		var target = document.getElementById("targetArticleId");
+		target.classList.add("is-invalid");
+		console.log("okkkk");
+		 event.preventDefault();
+         event.stopPropagation();
+		
+	}
+});
+</script>
+			by MI
+	</th:block>
+
+</body>
+</html>

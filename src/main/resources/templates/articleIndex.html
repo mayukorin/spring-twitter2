@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+		<div id="cont">
+			<div th:if="${param.delete}">
+				<div class="alert alert-success" role="alert">コメントを削除しました</div>
+			</div>
+			<div th:if="${param.createSuccess}">
+				<div class="alert alert-success" role="alert">コメントを作成しました</div>
+			</div>
+			<div>
+				<a th:href="@{/topPage}">TopPage</a>><a
+					th:href="@{/dramaIndex{id}(id=${sessionService.getSeasonComponent().getSeason().id})}"><span
+					th:text="${#dates.format(sessionService.getSeasonComponent().getSeason().getDramaStartDay().getTime(),'yyyy-MM')}"></span></a>><a
+					th:href="@{/channelIndex{id}(id=${sessionService.getTargetDramaComponent().getDrama().id})}"><span
+					th:text="${sessionService.getTargetDramaComponent().getDrama().name}"></span></a>><span
+					th:text="${sessionService.getChannelComponent().getChannel().title}"></span>
+			</div>
+			<br>
+			<h1>[[${sessionService.getChannelComponent().getChannel().drama.name}]]</h1>
+			<br>
+			<h2 id="channelTitle">[[${sessionService.getChannelComponent().getChannel().title}]]</h2>
+			<div>
+				<span id="commentUser">全[[${articles.size()}]]コメント</span> <span
+					id="commentUser"
+					th:text="${#dates.format(sessionService.getChannelComponent().getChannel().getCreated_at(),'yyyy/MM/dd HH:mm')}"></span>
+				<span><a th:href="@{/article_new}"><button type="button"
+							class="btn btn-light">コメントを作成する</button></a></span>
+			</div>
+			<br>
+			<hr>
+			<div th:if="${articles.size() > 0}">
+				<div th:each="article:${articles}" th:object="${article}">
+
+
+					<div id="commentUser" th:if="${article.siteuser != null}">
+						[[*{IdInChannel}]]. [[*{siteuser.name}]] <span
+							th:text="${#dates.format(article.created_at,'yyyy/MM/dd HH:mm')}"></span>&nbsp;&nbsp;&nbsp;<i
+							class="fas fa-share arrow"></i><a
+							th:href="@{/reply_index{id}(id=*{id})}">返信する</a>
+					</div>
+					<div id="commentUser" th:unless="${article.siteuser != null}">
+						[[*{IdInChannel}]]. <span
+							th:text="${#dates.format(article.created_at,'yyyy/MM/dd HH:mm')}"></span>
+					</div>
+					<br>
+					<div th:if="${article.MyReplys.size() != 0}">
+						<div th:each="myReply:${article.MyReplys}" th:object="${myReply}">
+							<a th:href="@{/reply_index{id}(id=*{targetArticle.id})}"><button
+									type="button" class="btn btn-light">
+									>><span th:text="*{targetArticle.IdInChannel}"></span>
+								</button></a>
+						</div>
+					</div>
+					<br>
+					<div th:text="*{content}"></div>
+					<br>
+
+					<div th:if="${article.replysForMe.size() > 0}">
+						<a th:href="@{/reply_index{id}(id=*{id})}"><button
+								type="button" class="btn btn-light">
+								<span th:text="*{replysForMe.size()}"></span>件の返信
+							</button></a>
+					</div>
+					<br>
+					<div
+						th:if="${article.siteuser != null && #authentication.principal.getSiteUser().getId() == article.siteuser.id}">
+						<a
+							th:href="@{/article_delete/{id}/{fromMyArticleFlag}(id=*{id},fromMyArticleFlag=${fromMyChannel})}">コメントを削除する</a>
+					</div>
+
+					<hr>
+
+
+				</div>
+
+			</div>
+		</div>
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+	</div>
+
+</body>
+</html>

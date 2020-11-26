@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+		<div id="cont">
+			<div th:if="${param.delete}">
+				<div class="alert alert-success" role="alert">コメントを削除しました</div>
+			</div>
+			<h1>[[${#authentication.principal.getSiteUser().name}]]さんが投稿したコメント一覧</h1>
+			<hr>
+			<div th:if="${myArticles.size() > 0}">
+				<div th:each="article:${myArticles}" th:object="${article}">
+
+					<div>
+						<span><a
+							th:href="@{dramaIndex{id}(id=*{channel.drama.season.id})}">[[${#dates.format(article.channel.drama.season.getDramaStartDay().getTime(),'yyyy-MM')}]]</a></span>><span><a
+							th:href="@{/channelIndex{id}(id=*{channel.drama.id})}">[[${article.channel.drama.name}]]</a></span>><span><a
+							th:href="@{/article_index{id}(id=*{channel.id})}">[[${{article.channel.title}}]]</a></span>
+					</div>
+					<br>
+					<div id="commentUser">
+						<span
+							th:text="${#dates.format(article.created_at,'yyyy/MM/dd HH:mm')}"></span>
+					</div>
+					<br>
+					<div th:if="${article.MyReplys.size() != 0}">
+						<div th:each="myReply:${article.MyReplys}" th:object="${myReply}">
+							<a th:href="@{/reply_index{id}(id=*{targetArticle.id})}"><button
+									type="button" class="btn btn-light">
+									>><span th:text="*{targetArticle.IdInChannel}"></span>
+								</button></a>
+						</div>
+					</div>
+					<br>
+					<div th:text="*{content}"></div>
+					<br>
+
+					<div th:if="${article.replysForMe.size() > 0}">
+						<a th:href="@{/reply_index{id}(id=*{id})}"><button
+								type="button" class="btn btn-light">
+								<span th:text="*{replysForMe.size()}"></span>件の返信
+							</button></a>
+
+					</div>
+					<br>
+					<div
+						th:if="${#authentication.principal.getSiteUser().getId() == article.siteuser.id}">
+						<a
+							th:href="@{/article_delete/{id}/{fromMyArticleFlag}(id=*{id},fromMyArticleFlag = ${fromMyChannel})}">コメントを削除する</a>
+					</div>
+					<hr>
+				</div>
+
+			</div>
+		</div>
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+	</div>
+
+</body>
+</html>

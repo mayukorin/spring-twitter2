@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+
+		<div id="cont">
+			<div th:if="${param.delete}">
+				<div class="alert alert-success" role="alert">ドラマの削除が完了しました。</div>
+			</div>
+			<div th:if="${param.dramaUpdateSuccess}">
+				<div class="alert alert-success" role="alert">ドラマの基本情報を更新しました。</div>
+			</div>
+			<div>
+				<a th:href="@{/topPage}">TopPage</a>><span
+					th:text="${#dates.format(sessionService.getSeasonComponent().getSeason().getDramaStartDay().getTime(),'yyyy-MM')}"></span>
+			</div>
+			<br>
+			<div th:if="${dramas.size() > 0}">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">ドラマ名</th>
+							<th scope="col">放送開始</th>
+							<th scope="col">放送終了</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="drama:${dramas}" th:object="${drama}">
+							<td><div th:text="*{name}"></div></td>
+							<td><div
+									th:text="${#dates.format(drama.startDay.getTime(),'yyyy-MM-dd HH:mm')}"></div></td>
+							<td><div
+									th:text="${#dates.format(drama.endDay.getTime(),'yyyy-MM-dd HH:mm')}"></div></td>
+
+							<td><a th:href="@{channelIndex{id}(id=*{id})}">チャンネル(全[[${drama.channels.size()}]]件)を見る</a></td>
+
+							<td
+								th:if="${drama.creater.id == #authentication.principal.getSiteUser().getId()}"><a
+								th:href="@{/dramaEdit/{id}/{fromFlag}(id=*{id},fromFlag = ${from})}">基本情報を編集する</a></td>
+							<td
+								th:unless="${drama.creater.id == #authentication.principal.getSiteUser().getId()}">ー</td>
+
+						</tr>
+
+					</tbody>
+				</table>
+				<br>
+				<p>お気に入り登録者数の推移</p>
+				<ul class="nav nav-tabs">
+					<li class="nav-item" th:each="monthData,elementStat:${couontDatas}">
+						<a th:href="@{#graph{num}(num=${elementStat.count})}"
+						class="nav-link" data-toggle="tab">[[${monthData.key.get(0)}]]</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div th:each="monthData,elementStat:${couontDatas}"
+						class="tab-pane" th:id="'graph'+${elementStat.count}">
+						<canvas th:id="'my-graph'+${elementStat.count}" width="800"
+							height="450"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+
+	</div>
+	<div th:if="${couontDatas.size() > 0}">
+		<div th:each="monthData,elementStat:${couontDatas}">
+
+			<script type="text/javascript" th:inline="javascript">
+				/*<![CDATA[*/
+					
+				 let count[[${elementStat.count}]] = /*[[${monthData.value.size()}]]*/
+				 
+				 
+			      // X軸に使う日付
+			      let labels[[${elementStat.count}]] = /*[[${monthData.key}]]*/;
+			     
+			
+			      let config[[${elementStat.count}]] = {
+			        type: "line",
+			        data: {
+			          labels: labels[[${elementStat.count}]],
+			          datasets: [
+			    
+			          ],
+			        },
+			        options: {
+			          scales: {
+			            xAxes: [{
+			              type: 'time',
+			              time: {
+			                unit: 'day'
+			              }
+			            }]
+			          }
+			        }
+			      };
+			      /*]]>*/
+		      </script>
+
+			<div th:each="nameCount,nStat:${monthData.value}">
+
+				<script type="text/javascript" th:inline="javascript">
+					/*<![CDATA[*/
+							var mw[[${elementStat.count}]][[${nStat.count}]] = /*[[${nStat.count}]]*/;
+							console.log(mw[[${elementStat.count}]][[${nStat.count}]]*10);
+							var color = {r:0, g:0, b:0};    // RGB 0～255の値で設定
+							
+							for(var i in color){
+						
+							    color[i] = Math.floor(Math.random() * 256);
+							
+							}
+							
+							var myColor = "rgb(" + color.r + ", " + color.g + ", " + color.b + ")";
+	
+						 	config[[${elementStat.count}]].data.datasets.push({
+						 		label:/*[[${nameCount.key}]]*/,
+						 		fill: false,
+					            borderColor:myColor,
+					            backgroundColor:myColor,
+					            data: /*[[${nameCount.value}]]*/
+						 	});
+		        	 
+			  			
+			  			
+				     /*]]>*/
+		         </script>
+
+			</div>
+
+			<script type="text/javascript" th:inline="javascript">
+				  	/*<![CDATA[*/
+				      var idString[[${elementStat.count}]] = "my-graph[[${elementStat.count}]]";
+				      
+				      var m = 1;
+			 		 
+				
+				      // チャートの生成
+				      window.addEventListener("load", function() {
+				          let ctx[[${elementStat.count}]] = document.getElementById(idString[[${elementStat.count}]]);
+				          myChart[[${elementStat.count}]] = new Chart(ctx[[${elementStat.count}]], config[[${elementStat.count}]]);
+				      }, false);
+			      	/*]]>*/
+		       </script>
+		</div>
+	</div>
+
+</body>
+</html>

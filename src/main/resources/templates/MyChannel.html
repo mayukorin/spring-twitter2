@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+		<div id="cont">
+			
+			<div th:if="${param.channelDelete}">
+
+				<div class="alert alert-success" role="alert">チャンネルの削除が完了しました</div>
+			</div>
+			<h1>[[${#authentication.principal.getSiteUser().name}]]さんが作成したチャンネル一覧</h1>
+			<br>
+			<div th:if="${myChannels.size() > 0}">
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">チャンネル名</th>
+							<th scope="col">ドラマ名</th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="channel:${myChannels}" th:object="${channel}">
+							<td><div th:text="*{title}"></div></td>
+							<td><div th:text="*{drama.name}"></div></td>
+							<td><a th:href="@{/article_index{id}(id=*{id})}">コメントを見る</a></td>
+							<td>
+								<div
+									th:if="${ channel.creater != null && #authentication.principal.getSiteUser().getId() == channel.creater.id}">
+									<a
+										th:href="@{/channel_delete/{id}/{fromMyChannel}(id=*{id},fromMyChannel=${fromMyChannel})}">チャンネルを削除する</a>
+								</div>
+								<div
+									th:unless="${ channel.creater != null && #authentication.principal.getSiteUser().getId() == channel.creater.id}">
+									ー</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+	</div>
+
+</body>
+</html>

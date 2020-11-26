@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+		
+		<div id="cont">
+			<div><a th:href="@{/topPage}">TopPage</a> > <span>[[${keyword}]]の検索結果：[[${dramas.size()}]]件</span></div><br>
+		<div th:if="${dramas.size() > 0}">
+			<table class="table table-striped">
+				  <thead>
+				    <tr>
+				      <th scope="col">ドラマ名</th>
+				      <th scope="col">放送開始</th>
+				      <th scope="col">放送終了</th>
+				      <th></th>
+				      <th></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  
+				  		<tr th:each="drama:${dramas}" th:object="${drama}">
+				  			<td><div th:text="*{name}"></div></td>
+				  			<td><div th:text="${#dates.format(drama.startDay.getTime(),'yyyy-MM-dd HH:mm')}"></div></td>
+				  			<td><div th:text="${#dates.format(drama.endDay.getTime(),'yyyy-MM-dd HH:mm')}"></div></td>
+				  			
+				  			<td><a th:href="@{channelIndex{id}(id=*{id})}">チャンネルを見る</a></td>
+				  		
+			  				<td th:if="${drama.creater.id == #authentication.principal.getSiteUser().getId()}"><a th:href="@{/dramaEdit/{id}/{fromFlag}(id=*{id},fromFlag=none)}">基本情報を編集する</a></td>
+			  				<td th:unless="${drama.creater.id == #authentication.principal.getSiteUser().getId()}">ー</td>
+				  		
+				  		</tr>
+				  	
+				  </tbody>
+				</table>
+			</div>
+		</div>
+		<div id="footer">
+	 		<th:block th:insert="fragments/base :: footer"></th:block>
+	 	</div>
+  
+　　　	 </div>
+	
+
+	
+
+	</body>
+</html>

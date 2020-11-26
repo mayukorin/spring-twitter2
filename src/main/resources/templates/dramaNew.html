@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Twitterアプリ</title>
+	<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+		<div id="cont">
+			<div th:if="${dateError != null}">
+				<div class="alert alert-danger" role="alert" th:text="${dateError}"></div>
+			</div>
+			<h1>ドラマ登録</h1><br>
+			<form th:action="@{/drama_create}" method="post"  th:object="${drama}" novalidate>
+				<th:block th:insert="fragments/_form_drama :: drama_form"></th:block>
+				<button type="submit" class="btn btn-primary">登録</button> 
+				
+			</form><br>
+			<p><a th:href="@{/topPage}">トップページへ戻る</a></p>
+		</div>
+		
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+	</div>
+
+</body>
+</html>

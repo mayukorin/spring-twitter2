@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+
+		<div id="cont">
+			<div th:if="${param.login}">
+
+				<div class="alert alert-success" role="alert">こんにちは[[${#authentication.principal.getSiteUser().getName()}]]さん</div>
+			</div>
+			<div th:if="${param.createSuccess}">
+				<div class="alert alert-success" role="alert">新しいドラマの登録が完了しました。</div>
+			</div>
+			<div>TopPage</div>
+			<br>
+			<div th:if="${seasonss.size() > 0}">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">放送開始月</th>
+							<th scope="col">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="season:${seasonss}" th:object="${season}">
+							<td
+								th:text="${#dates.format(season.getDramaStartDay().getTime(),'yyyy-MM')}"></td>
+							<td><a th:href="@{/dramaIndex{id}(id=${season.id})}">ドラマ一覧（全[[${season.dramas.size()}]]件）を見る</a></td>
+
+						</tr>
+
+
+					</tbody>
+				</table>
+				<br>
+
+			</div>
+			<a th:href="@{/dramaNew}">新しいドラマを登録する</a>
+		</div>
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+	</div>
+
+</body>
+</html>

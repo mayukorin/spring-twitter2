@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Twitterアプリ</title>
+	<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+		<div id="cont">
+			
+			<h2>コメント投稿</h2>
+			<form th:action="@{/article_create}" method="post" novalidate th:object="${article}" class="needs-validation">
+				<th:block th:insert="fragments/_form_article :: article_form"></th:block>
+				<button type="submit" class="btn btn-primary">投稿</button> 
+				
+			</form><br>
+		<a th:href="@{/article_index{id}(id=${sessionService.getChannelComponent().getChannel().id})}">コメント一覧に戻る</a>	
+		</div>
+		
+		<div id="footer">
+			<th:block th:insert="fragments/base :: footer"></th:block>
+		</div>
+	</div>
+
+</body>
+</html>

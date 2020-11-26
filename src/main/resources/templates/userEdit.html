@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Twitterアプリ</title>
+<th:block th:insert="fragments/base :: head"></th:block>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<th:block th:insert="fragments/base :: login_header"></th:block>
+		</div>
+		<div id="cont">
+
+			<h2>ユーザ情報編集</h2>
+			<form th:action="@{/user_edit_register}" th:object="${login_user}"
+				method="post" novalidate>
+				<th:block th:insert="fragments/_form_user :: user_form">
+
+				</th:block>
+				<input type="hidden" th:field="*{admin}">
+				<button type="submit" class="btn btn-primary">登録</button>
+
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>
